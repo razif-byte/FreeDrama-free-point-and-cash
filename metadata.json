@@ -1,0 +1,6 @@
+{
+  "name": "DramaShort",
+  "description": "Aplikasi penstriman video drama pendek (9:16) berbayar dengan sistem syiling, paywall, dompet, dan pengesahan pembayaran CIMB, TnG DuitNow, & ShopeePay.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
