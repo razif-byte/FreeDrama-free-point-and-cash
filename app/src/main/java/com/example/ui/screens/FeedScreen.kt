@@ -412,11 +412,14 @@ fun FeedScreen(
         Column(
             modifier = Modifier
                 .align(Alignment.BottomStart)
-                .fillMaxWidth(0.76f)
+                .fillMaxWidth(0.78f)
                 .navigationBarsPadding()
                 .padding(start = 16.dp, bottom = 16.dp)
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(6.dp)
+            ) {
                 // Episode tag
                 Box(
                     modifier = Modifier
@@ -433,7 +436,21 @@ fun FeedScreen(
                     )
                 }
 
-                Spacer(modifier = Modifier.width(8.dp))
+                // Malay Dubbing Tag
+                Box(
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(6.dp))
+                        .background(Color(0xFF1E3A8A).copy(alpha = 0.85f))
+                        .border(1.dp, Color(0xFF60A5FA).copy(alpha = 0.5f), RoundedCornerShape(6.dp))
+                        .padding(horizontal = 6.dp, vertical = 3.dp)
+                ) {
+                    Text(
+                        text = "🇲🇾 DUBBING MELAYU",
+                        color = Color(0xFFBFDBFE),
+                        fontSize = 9.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
 
                 // Trademark & Watermark = "RazifApps@Nasadef" link = "https://nasadef.com.my"
                 WatermarkBadge(isOverlayStyle = true)
@@ -445,7 +462,7 @@ fun FeedScreen(
             Text(
                 text = currentDrama.title,
                 color = TextPrimary,
-                fontSize = 18.sp,
+                fontSize = 17.sp,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
@@ -454,7 +471,7 @@ fun FeedScreen(
             // Synopsis Snippet
             Text(
                 text = if (activeEpisode.teaserText.isNotBlank()) activeEpisode.teaserText else currentDrama.synopsis,
-                color = Color.White.copy(alpha = 0.8f),
+                color = Color.White.copy(alpha = 0.85f),
                 fontSize = 12.sp,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis,
@@ -463,23 +480,43 @@ fun FeedScreen(
 
             Spacer(modifier = Modifier.height(6.dp))
 
-            // Studio Info row with Star Rating badge
+            // Studio Info row & Direct External Video Link
             Row(
                 verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.padding(top = 2.dp)
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(16.dp)
-                        .clip(CircleShape)
-                        .background(Color.White.copy(alpha = 0.3f))
-                )
-                Spacer(modifier = Modifier.width(6.dp))
                 Text(
                     text = "${currentDrama.genre} • ${currentDrama.rating}★ (${currentDrama.reviewsCount} Ulasan)",
-                    color = Color.White.copy(alpha = 0.7f),
+                    color = Color.White.copy(alpha = 0.75f),
                     fontSize = 11.sp
                 )
+
+                if (activeEpisode.videoUrl.isNotBlank() && activeEpisode.videoUrl.startsWith("http")) {
+                    val context = LocalContext.current
+                    Box(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(Color.White.copy(alpha = 0.15f))
+                            .border(0.5.dp, Color.White.copy(alpha = 0.3f), RoundedCornerShape(12.dp))
+                            .clickable {
+                                try {
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(activeEpisode.videoUrl))
+                                    context.startActivity(intent)
+                                } catch (e: Exception) {
+                                    // Fallback
+                                }
+                            }
+                            .padding(horizontal = 8.dp, vertical = 2.dp)
+                    ) {
+                        Text(
+                            text = if (activeEpisode.videoUrl.contains("youtu")) "▶ Video YouTube" else "▶ Video Drive",
+                            color = OrangeVibrant,
+                            fontSize = 10.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
             }
         }
 

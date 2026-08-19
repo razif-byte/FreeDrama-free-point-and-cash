@@ -40,6 +40,8 @@ class DramaViewModel(application: Application) : AndroidViewModel(application) {
         const val TRADEMARK_TEXT = "RazifApps@Nasadef"
         const val TRADEMARK_URL = "https://nasadef.com.my"
         const val SHOP_URL = "https://nasadef-website.web.app/"
+        const val DRIVE_AD_VIDEO_URL = "https://drive.google.com/file/d/1KTWIYxRnCbmhFE_sQoGutMMVFWhrnM6s/view?usp=drive_link"
+        const val YOUTUBE_AD_VIDEO_URL = "https://youtu.be/EvwdsI9G6-o"
     }
 
     // User State
@@ -165,40 +167,46 @@ class DramaViewModel(application: Application) : AndroidViewModel(application) {
         )
     )
 
-    // Sample Advertisements (Google Ads / Sponsored Monetization)
+    // Sample Advertisements (Google Ads / Sponsored Monetization with Requested Video Links)
     val sampleAds = listOf(
         SponsoredAd(
-            id = "ad_nasadef_01",
-            title = "Koleksi Eksklusif Nasadef Official Store",
-            sponsorName = "Nasadef Malaysia (Iklan Google Tajaan)",
-            description = "Dapatkan produk gaya hidup, pakaian berkualiti, dan gajet terkini dengan harga promosi hebat!",
-            actionText = "Lawati Kedai Sekarang",
+            id = "ad_drive_nasadef",
+            title = "Iklan Video Google Drive: Koleksi Eksklusif Nasadef",
+            sponsorName = "Nasadef Malaysia (Iklan Video Google Drive)",
+            description = "Tonton video tajaan promosi rasmi dari Google Drive untuk mendapat ganjaran syiling dan baucar diskaun di kedai!",
+            actionText = "Tonton Video Google Drive",
             targetUrl = SHOP_URL,
-            rewardCoins = 10,
-            rewardPoints = 50,
-            durationSeconds = 10
-        ),
-        SponsoredAd(
-            id = "ad_tech_02",
-            title = "Telefon Pintar & Aksesori Terkini 2026",
-            sponsorName = "Tech Gadget Store Google Ads",
-            description = "Diskaun sehingga 50% untuk fon telinga tanpa wayar dan pengecas pantas.",
-            actionText = "Tebus Tawaran",
-            targetUrl = SHOP_URL,
+            videoUrl = DRIVE_AD_VIDEO_URL,
+            videoType = "DRIVE",
             rewardCoins = 15,
             rewardPoints = 60,
-            durationSeconds = 12
+            durationSeconds = 10
         ),
         SponsoredAd(
-            id = "ad_app_03",
-            title = "Langganan Premium DramaShort VIP",
-            sponsorName = "RazifApps@Nasadef",
-            description = "Tonton semua drama tanpa had, tanpa sekatan episod dengan pas bulanan.",
-            actionText = "Ketahui Lebih Lanjut",
-            targetUrl = TRADEMARK_URL,
-            rewardCoins = 20,
-            rewardPoints = 80,
+            id = "ad_youtube_drama",
+            title = "Iklan Video YouTube: DramaShort Rasmi (EvwdsI9G6-o)",
+            sponsorName = "YouTube Ads Tajaan Rasmi",
+            description = "Saksikan video promosi YouTube eksklusif dan kumpulkan syiling percuma untuk membuka episod drama pendek!",
+            actionText = "Tonton Video di YouTube",
+            targetUrl = SHOP_URL,
+            videoUrl = YOUTUBE_AD_VIDEO_URL,
+            videoType = "YOUTUBE",
+            rewardCoins = 15,
+            rewardPoints = 60,
             durationSeconds = 10
+        ),
+        SponsoredAd(
+            id = "ad_nasadef_trademark",
+            title = "Langganan VIP & Kedai Rasmi RazifApps@Nasadef",
+            sponsorName = "RazifApps@Nasadef Google Ads",
+            description = "Dapatkan produk berkualiti, diskaun hebat, dan akses tanpa had drama alih suara Melayu.",
+            actionText = "Lawati Kedai Nasadef",
+            targetUrl = SHOP_URL,
+            videoUrl = YOUTUBE_AD_VIDEO_URL,
+            videoType = "YOUTUBE",
+            rewardCoins = 10,
+            rewardPoints = 50,
+            durationSeconds = 8
         )
     )
 

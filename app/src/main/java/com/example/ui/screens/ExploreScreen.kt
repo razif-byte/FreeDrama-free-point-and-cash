@@ -104,13 +104,14 @@ fun ExploreScreen(
     var searchQuery by remember { mutableStateOf("") }
     var selectedGenre by remember { mutableStateOf("Semua") }
 
-    val genres = listOf("Semua", "Romantik Korporat", "Dendam & Aksi", "Cinta Kontrak", "Trending 🔥")
+    val genres = listOf("Semua", "Dubbing Melayu 🇲🇾", "Romantik Korporat", "Dendam & Aksi", "Cinta Kontrak", "Trending 🔥")
 
     val filteredDramas = dramas.filter { drama ->
         val matchesSearch = drama.title.contains(searchQuery, ignoreCase = true) ||
                 drama.synopsis.contains(searchQuery, ignoreCase = true)
         val matchesGenre = when (selectedGenre) {
             "Semua" -> true
+            "Dubbing Melayu 🇲🇾" -> drama.title.contains("Dubbing", ignoreCase = true) || drama.genre.contains("Melayu", ignoreCase = true)
             "Trending 🔥" -> drama.isFeatured
             else -> drama.genre.contains(selectedGenre, ignoreCase = true)
         }

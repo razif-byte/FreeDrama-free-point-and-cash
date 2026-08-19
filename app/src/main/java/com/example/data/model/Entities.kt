@@ -133,6 +133,8 @@ data class SponsoredAd(
     val description: String,
     val actionText: String,
     val targetUrl: String,
+    val videoUrl: String = "",
+    val videoType: String = "WEB", // "DRIVE", "YOUTUBE", "WEB"
     val rewardCoins: Int = 10,
     val rewardPoints: Int = 50,
     val durationSeconds: Int = 10

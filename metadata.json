@@ -1,6 +1,6 @@
 {
   "name": "DramaShort",
-  "description": "Aplikasi penstriman video drama pendek (9:16) berbayar dengan sistem syiling, paywall, dompet, dan pengesahan pembayaran CIMB, TnG DuitNow, & ShopeePay.",
+  "description": "Aplikasi penstriman video drama pendek (9:16) alih suara Melayu (127 episod), sistem penarafan & ulasan bintang, ganjaran iklan Google Ads, penebusan baucar Nasadef Shop, dan paywall syiling.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

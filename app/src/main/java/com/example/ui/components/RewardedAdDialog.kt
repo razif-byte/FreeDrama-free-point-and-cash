@@ -97,6 +97,16 @@ fun RewardedAdDialog(
     val progress = (ad.durationSeconds - secondsLeft).toFloat() / ad.durationSeconds.toFloat()
     val animatedProgress by animateFloatAsState(targetValue = progress, label = "AdProgress")
 
+    val openVideoLink = {
+        try {
+            val urlToOpen = if (ad.videoUrl.isNotBlank()) ad.videoUrl else ad.targetUrl
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(urlToOpen))
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            // Fallback
+        }
+    }
+
     val openAdLink = {
         try {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(ad.targetUrl))
@@ -208,7 +218,7 @@ fun RewardedAdDialog(
                             .padding(20.dp),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        // Media Showcase Mock
+                        // Media Video Showcase Player Box
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -220,31 +230,40 @@ fun RewardedAdDialog(
                                     )
                                 )
                                 .border(1.dp, GlassBorder, RoundedCornerShape(16.dp))
-                                .clickable { openAdLink() },
+                                .clickable { openVideoLink() },
                             contentAlignment = Alignment.Center
                         ) {
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 modifier = Modifier.padding(12.dp)
                             ) {
-                                Icon(
-                                    imageVector = Icons.Default.ShoppingBag,
-                                    contentDescription = null,
-                                    tint = OrangeVibrant,
-                                    modifier = Modifier.size(44.dp)
-                                )
+                                Box(
+                                    modifier = Modifier
+                                        .size(48.dp)
+                                        .clip(CircleShape)
+                                        .background(OrangePrimary.copy(alpha = 0.85f)),
+                                    contentAlignment = Alignment.Center
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Default.PlayArrow,
+                                        contentDescription = "Mainkan Video",
+                                        tint = Color.White,
+                                        modifier = Modifier.size(28.dp)
+                                    )
+                                }
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
                                     text = ad.sponsorName,
                                     color = Color.White,
-                                    fontSize = 15.sp,
+                                    fontSize = 14.sp,
                                     fontWeight = FontWeight.Bold,
                                     textAlign = TextAlign.Center
                                 )
                                 Text(
-                                    text = "Klik untuk tawaran eksklusif",
-                                    color = OrangePrimary,
-                                    fontSize = 11.sp
+                                    text = if (ad.videoType == "DRIVE") "▶ Tekan untuk tonton video di Google Drive" else "▶ Tekan untuk tonton video di YouTube",
+                                    color = OrangeVibrant,
+                                    fontSize = 11.sp,
+                                    fontWeight = FontWeight.Medium
                                 )
                             }
                         }
@@ -254,7 +273,7 @@ fun RewardedAdDialog(
                         Text(
                             text = ad.title,
                             color = TextPrimary,
-                            fontSize = 18.sp,
+                            fontSize = 17.sp,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center
                         )
@@ -269,7 +288,7 @@ fun RewardedAdDialog(
                             lineHeight = 18.sp
                         )
 
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(14.dp))
 
                         // Reward Tag Pill
                         Row(
@@ -295,31 +314,60 @@ fun RewardedAdDialog(
                             )
                         }
 
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(14.dp))
 
-                        // Sponsor Action Button
-                        Button(
-                            onClick = openAdLink,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(44.dp),
-                            shape = RoundedCornerShape(12.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = Color.White.copy(alpha = 0.15f),
-                                contentColor = Color.White
-                            )
+                        // Action Buttons Row (Watch Video & Visit Shop)
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.OpenInNew,
-                                contentDescription = null,
-                                modifier = Modifier.size(14.dp)
-                            )
-                            Spacer(modifier = Modifier.width(6.dp))
-                            Text(
-                                text = "${ad.actionText} (nasadef-website)",
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.SemiBold
-                            )
+                            Button(
+                                onClick = openVideoLink,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(42.dp),
+                                shape = RoundedCornerShape(12.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = Color.White.copy(alpha = 0.15f),
+                                    contentColor = Color.White
+                                )
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.PlayArrow,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(14.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = if (ad.videoType == "DRIVE") "Video Drive" else "Video YouTube",
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
+
+                            Button(
+                                onClick = openAdLink,
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .height(42.dp),
+                                shape = RoundedCornerShape(12.dp),
+                                colors = ButtonDefaults.buttonColors(
+                                    containerColor = OrangePrimary.copy(alpha = 0.85f),
+                                    contentColor = Color.White
+                                )
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.ShoppingBag,
+                                    contentDescription = null,
+                                    modifier = Modifier.size(14.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = "Nasadef Shop",
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.SemiBold
+                                )
+                            }
                         }
                     }
                 }
